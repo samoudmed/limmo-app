@@ -1,45 +1,38 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: '#071c47',
+          paddingBottom: 6, // 👈 Petit padding en bas
+          height: 60,        // Facultatif : ajuste la hauteur si besoin
+        },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#aaa',
+        tabBarLabelPosition: 'below-icon', // ⬅️ Important pour le titre en dessous
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
+        tabBarIcon: ({ color, size }) => {
+          let iconName = '';
+
+          if (route.name === 'home') iconName = 'home-outline';
+          else if (route.name === 'search') iconName = 'search-outline';
+          else if (route.name === 'deposer-annonce') iconName = 'add-circle-outline';
+          else if (route.name === 'account') iconName = 'person-circle-outline';
+
+          return <Ionicons name={iconName as any} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tabs.Screen name="home" options={{ title: 'Accueil' }} />
+      <Tabs.Screen name="search" options={{ title: 'Recherche' }} />
+      <Tabs.Screen name="deposer-annonce" options={{ title: 'Déposer' }} />
+      <Tabs.Screen name="account" options={{ title: 'Compte' }} />
     </Tabs>
+    </SafeAreaView>
   );
 }
