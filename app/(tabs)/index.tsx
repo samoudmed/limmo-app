@@ -1,13 +1,18 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
 import { PropertyCard } from '@/components/PropertyCard';
 import { properties, Property } from '@/constants/data';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/ThemedText';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   const renderItem = ({ item }: { item: Property }) => (
-    <PropertyCard property={item} />
+    <Pressable onPress={() => router.push(`/(property)/${item.id}`)}>
+      <PropertyCard property={item} />
+    </Pressable>
   );
 
   return (

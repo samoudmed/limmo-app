@@ -56,7 +56,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <ThemedView style={styles.infoContainer}>
         <ThemedText type="subtitle">{property.title}</ThemedText>
         <ThemedText style={styles.address}>{property.address}</ThemedText>
-        <ThemedText type="defaultSemiBold" style={styles.price}>{property.price}</TheThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.price}>{property.price}</ThemedText>
       </ThemedView>
     </ThemedView>
   );
