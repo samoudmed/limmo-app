@@ -16,22 +16,30 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: '#aaa',
         tabBarLabelPosition: 'below-icon', // ⬅️ Important pour le titre en dessous
         headerShown: false,
-        tabBarIcon: ({ color, size }) => {
-          let iconName = '';
-
-          if (route.name === 'home') iconName = 'home-outline';
-          else if (route.name === 'search') iconName = 'search-outline';
-          else if (route.name === 'deposer-annonce') iconName = 'add-circle-outline';
-          else if (route.name === 'account') iconName = 'person-circle-outline';
-
-          return <Ionicons name={iconName as any} size={size} color={color} />;
-        },
-      })}
-    >
-      <Tabs.Screen name="home" options={{ title: 'Accueil' }} />
-      <Tabs.Screen name="search" options={{ title: 'Recherche' }} />
-      <Tabs.Screen name="deposer-annonce" options={{ title: 'Déposer' }} />
-      <Tabs.Screen name="account" options={{ title: 'Compte' }} />
+        tabBarButton: HapticTab,
+        tabBarBackground: TabBarBackground,
+        tabBarStyle: Platform.select({
+          ios: {
+            // Use a transparent background on iOS to show the blur effect
+            position: 'absolute',
+          },
+          default: {},
+        }),
+      }}>
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'List',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="list.bullet" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: 'Map',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
+        }}
+      />
     </Tabs>
     </SafeAreaView>
   );
